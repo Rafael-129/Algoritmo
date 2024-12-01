@@ -1,0 +1,183 @@
+/* General */
+body {
+    font-family: 'Arial', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    flex-direction: column; /* Asegura que los botones y la máquina estén en una columna */
+}
+
+/* Contenedor principal que organiza la máquina y el panel */
+.vending-machine-container {
+    display: flex;
+    flex-direction: column; /* Los elementos estarán en columna */
+    justify-content: flex-start; /* Alinea los elementos al principio */
+    align-items: center;
+    width: 100%;
+    height: auto;
+    position: relative; /* Posicionamiento relativo para poder colocar los botones arriba */
+}
+
+/* Máquina expendedora */
+.vending-machine-graphic {
+    width: 60%;
+    height: 750px;
+    background: linear-gradient(to bottom, #333, #555);
+    border-radius: 20px;
+    border: 10px solid #222;
+    position: relative;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.6);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 20px;
+    margin-top: 70px; /* Ajustado para que los botones no queden demasiado separados */
+    text-align: center;
+}
+
+/* Pantalla gráfica */
+.screen-graphic {
+    width: 100%;
+    height: 50px;
+    background: #000;
+    border: 3px solid #444;
+    border-radius: 10px;
+    color: #0f0;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 0.9rem;
+    margin-bottom: 20px;
+}
+
+/* Panel de control con botones */
+.panel-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+/* Contenedor de los botones */
+.button-container {
+    display: flex;
+    flex-direction: row; /* Los botones estarán al lado */
+    gap: 5px; /* Reducido para juntar los botones */
+    position: absolute; /* Posiciona los botones encima de la máquina */
+    top: -40px; /* Ajuste para acercar los botones sin que se salgan de la pantalla */
+}
+
+/* Estilo de los botones de reabastecer e historial */
+.btn-reabastecer, .btn-historial {
+    width: 220px; /* Botones más estrechos */
+    height: 50px; /* Botones más bajos */
+    font-size: 18px; /* Tamaño de texto adecuado */
+    padding: 0; /* Eliminar el relleno innecesario */
+    border-radius: 10px; /* Borde redondeado */
+    color: white;
+    border: none;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+/* Estilos específicos */
+.btn-reabastecer {
+    background-color: #28a745; /* Verde para reabastecer */
+}
+
+.btn-historial {
+    background-color: #17a2b8; /* Azul para historial */
+}
+
+/* Efecto hover */
+.btn-reabastecer:hover {
+    background-color: #218838;
+}
+
+.btn-historial:hover {
+    background-color: #138496;
+}
+
+/* Ajustes para otros botones dentro de la máquina expendedora */
+.button-number {
+    margin: 5px; /* Menos margen entre botones */
+    width: 60px; /* Botones más estrechos */
+    height: 50px; /* Botones más pequeños */
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #007bff; /* Color de fondo de los botones */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+/* Efecto hover para los botones dentro de la máquina expendedora */
+.button-number:hover {
+    background-color: #0056b3;
+}
+
+/* Estilo de los botones con un color de fondo diferente */
+button.btn-primary {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+}
+
+button.btn-secondary {
+    background-color: #6c757d;
+    color: white;
+    border: none;
+    border-radius: 5px;
+}
+
+button.btn-dark {
+    background-color: #343a40;
+    color: white;
+    border: none;
+    border-radius: 5px;
+}
+
+/* Añadir transiciones para los botones */
+button {
+    transition: background-color 0.3s ease;
+}
+
+/* Diseño responsive: Hacer la interfaz más pequeña en pantallas pequeñas */
+@media (max-width: 768px) {
+    .vending-machine-container {
+        flex-direction: column;
+    }
+
+    .vending-machine-graphic {
+        width: 80%;
+        height: 600px;
+        margin-bottom: 20px;
+    }
+
+    .panel-container {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+    }
+
+    .button-container {
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+    }
+}
