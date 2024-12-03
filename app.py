@@ -186,5 +186,27 @@ def reabastecer():
     return render_template('reabastecer.html', mensaje=None)
 
 
+@app.route('/cancelar', methods=['POST'])
+def cancelar():
+    global total_acumulado
+
+    if historial:
+        # Eliminar el último pedido del historial
+        ultimo_pedido = historial.pop()
+        total_acumulado -= ultimo_pedido['total']  # Restar del total acumulado
+
+        # Revertir el stock del producto
+        producto = next((p for p in inventario if p['nombre'] == ultimo_pedido['producto']), None)
+        if producto:
+            producto['cantidad'] += 1
+
+        mensaje = f"Pedido de {ultimo_pedido['producto']} cancelado exitosamente."
+    else:
+        mensaje = "No hay pedidos para cancelar."
+
+    return render_template('index.html', inventario=inventario, mensaje=mensaje, total_acumulado=total_acumulado)
+
+
+
 if __name__ == '__main__':
     app.run(debug=True)

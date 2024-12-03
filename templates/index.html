@@ -5,54 +5,80 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Máquina Expendedora</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="/static/styles.css">
+    <link rel="stylesheet" href="./static/styles.css">
 </head>
 <body class="bg-light d-flex justify-content-center align-items-center vh-100">
 
     <div class="vending-machine-container">
         <!-- Máquina expendedora -->
         <div class="vending-machine-graphic">
-            <!-- Inventario de productos -->
-            <form method="POST" class="button-panel">
-                <div class="screen-graphic">
-                    <p id="screen-display" class="m-0">
-                        {{ mensaje }} 
-                    </p>
-                </div>
-                
+            <!-- Pantalla Principal (Botones) -->
+            <div class="vending-machine-screen" id="button-screen">
+                <form method="POST" class="button-panel">
+                    <div class="screen-graphic">
+                        <p id="screen-display" class="m-0">
+                            {{ mensaje }}
+                        </p>
+                    </div>
+                    
+                    <div class="container">
+                        <div class="row">
+                            {% for producto in inventario %}
+                                <div class="col-md-4 mb-3">
+                                    <div class="mb-2">
+                                        <button class="btn btn-sm btn-dark button-number" 
+                                                name="producto" 
+                                                value="{{ producto['nombre'] }}" 
+                                                title="Seleccionar {{ producto['nombre'] }}">
+                                            {{ producto['nombre'] }}
+                                        </button>
+                                    </div>
+                                    <div class="text-white ms-3">
+                                        Stock: {{ producto['cantidad'] }}
+                                    </div>
+                                </div>
+                                {% if loop.index % 3 == 0 and not loop.last %}
+                                    </div><div class="row">
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Pantalla de Productos -->
+            <div class="vending-machine-screen d-none" id="product-screen">
+                <h3>Productos Disponibles</h3>
                 <div class="container">
                     <div class="row">
                         {% for producto in inventario %}
-                            <div class="col-md-4 mb-3"> 
-                                <div class="mb-2">
-                                    <!-- Botón que envia el nombre del producto al servidor -->
-                                    <button class="btn btn-sm btn-dark button-number" name="producto" value="{{ producto['nombre'] }}">
-                                        {{ producto['nombre'] }}
-                                    </button>
-                                </div>
-                                <!-- Stock debajo del botón -->
-                                <div class="text-white ms-3">
-                                    Stock: {{ producto['cantidad'] }}
+                            <div class="col-md-4 mb-3">
+                                <div class="card text-center">
+                                    <div class="card-body">
+                                        <h5 class="card-title">{{ producto['nombre'] }}</h5>
+                                        <p class="card-text">Stock: {{ producto['cantidad'] }}</p>
+                                    </div>
                                 </div>
                             </div>
-                            {% if loop.index % 3 == 0 and not loop.last %}
-                                </div><div class="row"> 
-                            {% endif %}
                         {% endfor %}
                     </div>
                 </div>
-            </form>
+                <button id="back-to-buttons" class="btn btn-primary mt-3">Volver a la pantalla de botones</button>
+            </div>
         </div>
 
-        <!-- Panel de control (botones al costado de la máquina) -->
+        <!-- Panel de control -->
         <div class="panel-container">
             <div class="button-container">
                 <form action="/reabastecer" method="GET" class="mb-3">
-                    <button class="btn btn-primary btn-reabastecer">Reabastecer Productos</button>
+                    <button class="btn btn-primary btn-reabastecer" title="Ir a reabastecer productos">Reabastecer Productos</button>
                 </form>
                 <form action="/historial" method="GET" class="mb-3">
-                    <button class="btn btn-secondary btn-historial">Ver Historial</button>
+                    <button class="btn btn-secondary btn-historial" title="Ver historial de pedidos">Ver Historial</button>
                 </form>
+                <form action="/cancelar" method="POST" class="mb-3">
+                    <button class="btn btn-danger btn-cancelar" title="Cancelar pedido actual">Cancelar Pedido</button>
+                </form>                
             </div>
         </div>
     </div>
